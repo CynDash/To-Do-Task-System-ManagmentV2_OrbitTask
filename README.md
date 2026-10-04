@@ -526,27 +526,5 @@ Possible future improvements include:
 # Author
 
 **Name:** Cyril John Dragas\
-**Section:** \[Enter Your Section\]
+**Section:** \CS26L - 3581\
 
-------------------------------------------------------------------------
-
-# GitHub Repository
-
-**Repository:** \[Paste your GitHub repository link here\]
-
-------------------------------------------------------------------------
-
-# Conclusion
-
-OrbitTask is a simple desktop To-Do Task Management System that
-demonstrates how Python, PyQt6, SQLite, and Object-Oriented Programming
-can be combined to create a functional application.
-
-The project provides the basic operations needed for task management,
-including adding, updating, completing, deleting, filtering, and viewing
-tasks. It also provides a Dashboard that helps users monitor their task
-progress and identify overdue work.
-
-Through this project, the developers were able to apply concepts such as
-classes, inheritance, encapsulation, database operations, GUI
-development, and software organization in a practical system.
