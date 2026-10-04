@@ -2,151 +2,163 @@
 
 ## Project Description
 
-**OrbitTask** is a desktop-based To-Do Task Management System developed
-using **Python and PyQt6**. The system helps users create, organize,
-update, complete, and delete tasks in one application.
+**OrbitTask** is a desktop-based To-Do Task Management System developed using **Python and PyQt6**. It allows users to create, organize, update, complete, and delete tasks in one application.
 
-The system is designed to make task management simple and organized.
-Users can assign categories, set created and due dates, view tasks by
-status, and monitor their overall progress through the Dashboard. The
-application also identifies overdue tasks so users can easily see tasks
-that have passed their due date.
+The system is designed to help users manage their daily tasks, keep track of deadlines, organize tasks by category, and monitor their overall progress through a dashboard.
 
-------------------------------------------------------------------------
+OrbitTask also identifies overdue tasks so users can easily see tasks that have passed their due date.
+
+---
 
 ## Problem Statement
 
-Managing tasks manually can make it difficult to remember deadlines and
-track which tasks are already finished. Users may also have difficulty
-organizing tasks according to their categories and checking their
-overall progress.
+Managing tasks manually can make it difficult to remember deadlines and determine which tasks are already completed. It can also be difficult to organize different tasks and monitor overall progress.
 
-OrbitTask was created to provide a simple desktop application where
-users can manage their tasks, monitor deadlines, and separate completed
-and unfinished work.
+OrbitTask addresses this problem by providing a simple desktop application where users can:
 
-------------------------------------------------------------------------
+- Create and organize tasks
+- Set task categories
+- Set due dates
+- Track completed and unfinished tasks
+- Identify overdue tasks
+- Monitor task progress
+- Store task information using a local database
 
-## Objectives
+---
+
+## Project Objectives
 
 The main objectives of OrbitTask are:
 
-1.  To provide a simple system for creating and managing tasks.
-2.  To allow users to organize tasks using categories.
-3.  To record the created date and due date of each task.
-4.  To allow users to update and delete existing tasks.
-5.  To mark unfinished tasks as completed.
-6.  To identify overdue tasks.
-7.  To provide separate views for In Progress, Completed, and All Tasks.
-8.  To provide a Dashboard that summarizes task progress.
-9.  To store task information using an SQLite database.
-10. To demonstrate Object-Oriented Programming concepts in a practical
-    application.
+1. To provide a simple system for creating and managing tasks.
+2. To allow users to organize tasks using categories.
+3. To record the created date and due date of each task.
+4. To allow users to update existing tasks.
+5. To allow users to delete existing tasks.
+6. To allow users to mark tasks as completed.
+7. To identify overdue tasks.
+8. To provide separate views for In Progress, Completed, and All Tasks.
+9. To provide a Dashboard that summarizes task progress.
+10. To store task information using an SQLite database.
+11. To demonstrate Object-Oriented Programming concepts in a practical application.
 
-------------------------------------------------------------------------
+---
 
 ## Features
 
 ### 1. Dashboard
 
-The Dashboard provides an overview of the user's tasks. It displays:
+The Dashboard provides an overview of the user's tasks.
 
--   Total Tasks
--   In Progress Tasks
--   Overdue Tasks
--   Completed Tasks
--   Completion Progress
--   Pending Tasks
--   Completed Tasks
+It displays:
+
+- Total Tasks
+- In Progress Tasks
+- Overdue Tasks
+- Completed Tasks
+- Completion Progress
+- Pending Tasks
+- Completed Tasks
 
 ### 2. Add Task
 
 Users can create a new task by entering:
 
--   Task description
--   Category
--   Due date
+- Task description
+- Category
+- Due date
 
 The system automatically records the created date.
 
+Available categories are:
+
+- General
+- School
+- House Chores
+- Work
+- Personal
+
 ### 3. Update Task
 
-Users can select an existing task and modify its information.
+Users can select an unfinished task and update its:
+
+- Task description
+- Category
+- Due date
 
 ### 4. Complete Task
 
-Users can mark an unfinished task as completed. Completed tasks are
-displayed in the Completed section.
+Users can mark an unfinished task as completed.
+
+Completed tasks are then displayed in the **Completed** section.
 
 ### 5. Delete Task
 
-Users can remove a selected task from the system.
+Users can delete an existing unfinished task from the system.
 
-### 6. Task Categories
+The system asks for confirmation before deleting the task.
 
-Tasks can be organized into the following categories:
+### 6. Overdue Task Detection
 
--   General
--   School
--   House Chores
--   Work
--   Personal
+The system automatically identifies unfinished tasks whose due date has already passed.
 
-### 7. Task Status
+These tasks are displayed with the status:
 
-The system can display tasks according to their current status:
+**Overdue**
 
--   In Progress
--   Completed
--   Overdue
+### 7. Task Filtering
 
-### 8. Task Filters
+Users can filter tasks based on their created date.
 
-Users can filter tasks by date and category. Available date filters
-include:
+Available date filters:
 
--   Today
--   Yesterday
--   This Week
--   This Month
--   All Dates
--   Custom Date
+- Today
+- Yesterday
+- This Week
+- This Month
+- All Dates
+- Custom Date
+
+Users can also filter tasks by category.
+
+### 8. Task Status
+
+Tasks can have the following statuses:
+
+- **In Progress** - The task has not been completed and is not overdue.
+- **Completed** - The task has been marked as completed.
+- **Overdue** - The task has passed its due date and has not been completed.
 
 ### 9. Task Views
 
-The application provides separate pages for:
+The application provides four main pages:
 
--   Dashboard
--   In Progress
--   Completed
--   All Tasks
+- Dashboard
+- In Progress
+- Completed
+- All Tasks
 
-### 10. SQLite Database
-
-Task information is stored locally using SQLite, allowing the
-application to save and retrieve tasks even after the program is closed.
-
-------------------------------------------------------------------------
+---
 
 ## Technologies Used
 
-  Technology    Purpose
-  ------------- ----------------------------
-  Python        Main programming language
-  PyQt6         Graphical User Interface
-  SQLite        Local database
-  sqlite3       Python database connection
-  QSS           Application styling
-  dataclasses   Task model structure
-  pathlib       File and path management
-  datetime      Date handling
-  PyCharm       Development environment
+| Technology | Purpose |
+|---|---|
+| **Python** | Main programming language |
+| **PyQt6** | Graphical User Interface |
+| **SQLite** | Local database |
+| **sqlite3** | Python library used for SQLite database operations |
+| **QSS** | Application styling |
+| **dataclasses** | Used for the Task model |
+| **datetime** | Used for date and deadline handling |
+| **pathlib** | Used for database file path management |
+| **PyCharm** | Development environment |
 
-------------------------------------------------------------------------
+---
 
 ## Project Structure
 
-``` text
+```text
 OrbitTask/
 │
 ├── database/
@@ -174,357 +186,408 @@ OrbitTask/
 └── README.md
 ```
 
-------------------------------------------------------------------------
+### File and Folder Description
+
+**`database/`**  
+Contains the files responsible for connecting to and initializing the SQLite database.
+
+**`database.py`**  
+Creates the database connection and initializes the `tasks` table.
+
+**`features/Tasks/`**  
+Contains the main components of the task management system.
+
+**`model.py`**  
+Contains the `Task` data model. It stores task information such as ID, title, category, created date, due date, and completion status. It also determines the current status of a task.
+
+**`repository.py`**  
+Handles database operations for tasks, including adding, reading, updating, completing, and deleting tasks.
+
+**`service.py`**  
+Contains the application logic between the user interface and database repository. It also validates task information before saving it.
+
+**`view.py`**  
+Contains the graphical user interface of OrbitTask, including the Dashboard, task tables, filters, dialogs, buttons, and controls.
+
+**`Style.qss`**  
+Contains the visual styling of the application.
+
+**`main.py`**  
+The main entry point of the application. It initializes the database, creates the PyQt6 application, loads the stylesheet, creates the repository and service, and opens the main window.
+
+**`tasks.db`**  
+The local SQLite database file used to store task information.
+
+---
 
 ## Installation and Setup
 
 ### Requirements
 
-Before running OrbitTask, install:
+Before running OrbitTask, make sure you have:
 
--   Python 3.x
--   PyQt6
+- Python 3.x
+- PyQt6
+- PyCharm or another Python IDE (optional)
 
-### Step 1: Clone or Download the Project
+### Step 1: Clone the Repository
 
-Download the project from the GitHub repository or open the project
-folder in PyCharm.
+Clone the project from GitHub:
+
+```bash
+git clone YOUR_GITHUB_REPOSITORY_LINK
+```
+
+Then open the project folder.
 
 ### Step 2: Install PyQt6
 
-Open the terminal in the project folder and run:
+Open the terminal inside the project folder and run:
 
-``` bash
+```bash
 pip install PyQt6
 ```
 
-### Step 3: Run the Application
+### Step 3: Check the Project Structure
+
+Make sure the project contains:
+
+```text
+main.py
+Style.qss
+database/
+features/
+screenshots/
+```
+
+### Step 4: Run the Application
 
 Run:
 
-``` bash
+```bash
 python main.py
 ```
 
-If you are using PyCharm, you can also run `main.py` directly using the
-Run button.
+If you are using PyCharm, open `main.py` and click the **Run** button.
 
-The SQLite database is initialized automatically when the application
-starts.
+### Step 5: Database Initialization
 
-------------------------------------------------------------------------
+The SQLite database is initialized automatically when the application starts.
+
+The database file is:
+
+```text
+tasks.db
+```
+
+---
 
 ## How to Use the System
 
-### Adding a Task
+### 1. Open OrbitTask
 
-1.  Open OrbitTask.
-2.  Go to the Dashboard or task section.
-3.  Click **Add**.
-4.  Enter the task description.
-5.  Select a category.
-6.  Select the due date.
-7.  Click **Save**.
-8.  The new task will appear in the task list.
+Run:
 
-### Updating a Task
+```bash
+python main.py
+```
 
-1.  Select a task from the list.
-2.  Click **Update**.
-3.  Modify the task information.
-4.  Click **Save**.
+The OrbitTask window will open.
 
-### Completing a Task
+### 2. Add a Task
 
-1.  Select an unfinished task.
-2.  Click **Complete**.
-3.  The task will be marked as Completed.
-4.  It will appear in the Completed task list.
+1. Go to the **In Progress** page.
+2. Click **+ Add Task**.
+3. Enter the task description.
+4. Select a category.
+5. Select a due date.
+6. Click **Save**.
+7. The task will be added to the database and displayed in the task list.
 
-### Deleting a Task
+### 3. Update a Task
 
-1.  Select the task.
-2.  Click **Delete**.
-3.  Confirm the deletion if prompted.
+1. Go to the **In Progress** page.
+2. Select a task.
+3. Click **Update**.
+4. Change the task information.
+5. Click **Save**.
 
-### Viewing Overdue Tasks
+### 4. Complete a Task
 
-Tasks that pass their due date without being completed are identified as
-**Overdue**. These tasks can be seen in the task lists and reflected in
-the Dashboard.
+1. Go to the **In Progress** page.
+2. Select an unfinished task.
+3. Click **Complete**.
+4. The task will be marked as **Completed**.
+5. The task will appear in the Completed section.
 
-### Using Filters
+### 5. Delete a Task
 
-Use the date and category filters to display only the tasks that match
-the selected criteria.
+1. Go to the **In Progress** page.
+2. Select a task.
+3. Click **Delete**.
+4. Confirm the deletion.
+5. The task will be removed from the database.
 
-------------------------------------------------------------------------
+### 6. Filter Tasks
 
-# Object-Oriented Programming Implementation
+Use the filter controls at the top of the application.
 
-OrbitTask applies Object-Oriented Programming principles through several
-classes.
+You can filter tasks by:
 
-## Main Classes
+- Date
+- Category
 
-### 1. Task
+For dates, you can select:
 
-The `Task` class is the model of a task. It stores information such as:
+- Today
+- Yesterday
+- This Week
+- This Month
+- All Dates
+- Custom Date
 
--   ID
--   Title
--   Category
--   Created Date
--   Due Date
--   Completion Status
+---
 
-It also provides a `status` property that represents whether a task is
-completed or still in progress.
+## OOP Implementation
 
-### 2. TaskRepository
+OrbitTask uses Object-Oriented Programming through several classes.
 
-The `TaskRepository` class is responsible for communicating with the
-SQLite database.
+### Important Classes
 
-Its main operations include:
+#### `Task`
 
--   `add_task()`
--   `get_tasks_by_date()`
--   `get_all_tasks()`
--   `update_task()`
--   `complete_task()`
--   `delete_task()`
+Located in:
 
-### 3. TaskService
+```text
+features/Tasks/model.py
+```
 
-The `TaskService` class handles the application logic between the user
-interface and the repository.
+The `Task` class represents a task in the system.
 
-It validates task information before sending operations to the
-repository.
+It contains:
 
-### 4. TaskDialog
+```text
+id
+title
+category
+created_date
+due_date
+is_completed
+```
 
-The `TaskDialog` class creates the form used for adding and editing
-tasks. It inherits from PyQt6's `QDialog`.
+It also contains a `status` property that determines whether a task is:
 
-### 5. TaskView
+- In Progress
+- Completed
+- Overdue
 
-The `TaskView` class controls the main application window and user
-interface. It inherits from PyQt6's `QMainWindow`.
+#### `TaskRepository`
 
-------------------------------------------------------------------------
+Located in:
+
+```text
+features/Tasks/repository.py
+```
+
+The `TaskRepository` class handles communication with the SQLite database.
+
+Important methods include:
+
+```text
+add_task()
+get_tasks_by_date()
+get_all_tasks()
+update_task()
+complete_task()
+delete_task()
+```
+
+#### `TaskService`
+
+Located in:
+
+```text
+features/Tasks/service.py
+```
+
+The `TaskService` class handles application logic and validation between the user interface and repository.
+
+#### `TaskDialog`
+
+Located in:
+
+```text
+features/Tasks/view.py
+```
+
+`TaskDialog` is used for adding and updating tasks.
+
+It inherits from the PyQt6 `QDialog` class.
+
+#### `TaskView`
+
+Located in:
+
+```text
+features/Tasks/view.py
+```
+
+`TaskView` is the main application window.
+
+It inherits from the PyQt6 `QMainWindow` class.
+
+---
 
 ## OOP Concepts Used
 
 ### Encapsulation
 
-Encapsulation is demonstrated by separating responsibilities into
-different classes.
+Encapsulation is demonstrated by separating different responsibilities into different classes.
 
 For example:
 
--   `Task` manages task data.
--   `TaskRepository` manages database operations.
--   `TaskService` manages application logic.
--   `TaskView` manages the user interface.
-
-This makes the program easier to maintain and understand.
+- `Task` handles task data.
+- `TaskRepository` handles database operations.
+- `TaskService` handles application logic.
+- `TaskView` handles the graphical interface.
 
 ### Inheritance
 
 Inheritance is used with PyQt6 classes.
 
-Examples:
+For example:
 
-``` python
+```python
 class TaskDialog(QDialog):
 ```
 
-and:
+The `TaskDialog` class inherits from `QDialog`.
 
-``` python
+Another example is:
+
+```python
 class TaskView(QMainWindow):
 ```
 
-The custom classes inherit functionality from PyQt6's `QDialog` and
-`QMainWindow`.
+The `TaskView` class inherits from `QMainWindow`.
 
 ### Polymorphism
 
-Polymorphism is demonstrated through the use of inherited Qt methods and
-widgets. The custom classes can use and customize behavior provided by
-their PyQt6 parent classes.
+Polymorphism is applied through the PyQt6 framework, where the custom GUI classes inherit and use behavior from their parent Qt classes while providing their own implementation for the application.
 
-------------------------------------------------------------------------
+---
 
-# Database
+## Database
 
-OrbitTask uses **SQLite** as its local database.
+OrbitTask uses **SQLite** for local data storage.
 
-## Database Table
+The database file is:
 
-The main table is:
+```text
+tasks.db
+```
+
+### Database Table
+
+The main database table is:
 
 ### `tasks`
 
-  Field          Type      Description
-  -------------- --------- ---------------------------
-  id             INTEGER   Unique task ID
-  title          TEXT      Task description
-  category       TEXT      Task category
-  created_date   TEXT      Date the task was created
-  due_date       TEXT      Task deadline
-  is_completed   INTEGER   Completion status
+| Field | Type | Description |
+|---|---|---|
+| `id` | INTEGER | Unique task ID |
+| `title` | TEXT | Task description |
+| `category` | TEXT | Task category |
+| `created_date` | TEXT | Date the task was created |
+| `due_date` | TEXT | Task deadline |
+| `is_completed` | INTEGER | Completion status |
 
 The `is_completed` field uses:
 
--   `0` = Not completed
--   `1` = Completed
+```text
+0 = Not Completed
+1 = Completed
+```
 
-------------------------------------------------------------------------
+### Database Operations
 
-## Database Operations
+**Create** - A new task is inserted into the `tasks` table.
 
-The system supports the basic CRUD operations:
+**Read** - The system retrieves tasks from the database.
 
-### Create
+**Update** - Existing task information can be updated.
 
-New tasks are inserted into the database.
+**Delete** - A selected task can be removed from the database.
 
-### Read
+**Complete** - A task can be marked as completed by changing `is_completed` to `1`.
 
-Tasks can be retrieved by date or all tasks can be retrieved.
+---
 
-### Update
+## Screenshots
 
-Existing task information can be modified.
+### Dashboard
 
-### Delete
-
-Selected tasks can be removed from the database.
-
-### Complete
-
-A task can be marked as completed by changing its completion status.
-
-------------------------------------------------------------------------
-
-# Screenshots
-
-## 1. Dashboard
-
-The Dashboard provides an overview of the task system, including total
-tasks, in-progress tasks, overdue tasks, completed tasks, completion
-progress, and task lists.
+The Dashboard displays the overall task information, including total tasks, in-progress tasks, overdue tasks, completed tasks, completion progress, and task lists.
 
 ![Dashboard](screenshots/dashboard.png)
 
-## 2. In Progress
+### In Progress
 
-The In Progress page displays tasks that have not yet been completed.
-Overdue tasks are also identified in the task list.
+The In Progress page displays unfinished tasks and provides the main task management buttons.
 
 ![In Progress](screenshots/in-progress.png)
 
-## 3. Completed
+### Completed
 
-The Completed page displays tasks that have already been marked as
-completed.
+The Completed page displays tasks that have already been marked as completed.
 
 ![Completed](screenshots/completed.png)
 
-## 4. All Tasks
+### All Tasks
 
-The All Tasks page displays all tasks stored in the system, including In
-Progress, Completed, and Overdue tasks.
+The All Tasks page displays all stored tasks, including their category, created date, due date, and current status.
 
 ![All Tasks](screenshots/all-tasks.png)
 
-------------------------------------------------------------------------
+---
 
-# Testing
+## Testing
 
-The system was tested by performing common task management operations.
+The system was tested by performing the main task management operations.
 
-  -----------------------------------------------------------------------
-  Test Case         Expected Result   Actual Result     Status
-  ----------------- ----------------- ----------------- -----------------
-  Add a new task    New task is       Task was added    Passed
-                    displayed in the  successfully      
-                    task list                           
+| Test Case | Expected Result | Actual Result | Status |
+|---|---|---|---|
+| Add a new task | New task should appear in the task list | Task was added successfully | Passed |
+| Update a task | Selected task information should be updated | Task information was updated | Passed |
+| Complete a task | Task status should change to Completed | Task was marked as Completed | Passed |
+| Delete a task | Selected task should be removed | Task was deleted successfully | Passed |
+| View In Progress | Unfinished tasks should be displayed | Tasks were displayed correctly | Passed |
+| View Completed | Completed tasks should be displayed | Tasks were displayed correctly | Passed |
+| View All Tasks | All stored tasks should be displayed | Tasks were displayed correctly | Passed |
+| Detect overdue tasks | Past-due unfinished tasks should show Overdue | Overdue tasks were identified | Passed |
+| Filter by date | Matching tasks should be displayed | Date filtering worked | Passed |
+| Filter by category | Matching category tasks should be displayed | Category filtering worked | Passed |
 
-  Update a task     Selected task     Task was updated  Passed
-                    information is    successfully      
-                    updated                             
+---
 
-  Complete a task   Task changes to   Task was marked   Passed
-                    Completed         as Completed      
-
-  Delete a task     Selected task is  Task was deleted  Passed
-                    removed           successfully      
-
-  View In Progress  Unfinished tasks  Tasks were        Passed
-                    are displayed     displayed         
-                                      correctly         
-
-  View Completed    Completed tasks   Tasks were        Passed
-                    are displayed     displayed         
-                                      correctly         
-
-  View All Tasks    All stored tasks  Tasks were        Passed
-                    are displayed     displayed         
-                                      correctly         
-
-  Check overdue     Past-due          Overdue tasks     Passed
-  tasks             unfinished tasks  were identified   
-                    are identified                      
-
-  Filter tasks      Matching tasks    Filters worked as Passed
-                    are displayed     expected          
-
-  Save data         Task information  SQLite stored the Passed
-                    remains stored    task data         
-  -----------------------------------------------------------------------
-
-------------------------------------------------------------------------
-
-# Known Issues and Limitations
+## Known Issues / Limitations
 
 The current version of OrbitTask has the following limitations:
 
-1.  The application is designed for a single local user.
-2.  The database is stored locally using SQLite.
-3.  There is no online synchronization.
-4.  There is no user login or account system.
-5.  There are no email or mobile notifications.
-6.  Task categories are limited to the categories provided by the
-    application.
-7.  The system does not include cloud database storage.
-8.  The application currently focuses on basic task management rather
-    than advanced project management features.
+1. The application is designed for a single local user.
+2. The database is stored locally using SQLite.
+3. There is no online or cloud synchronization.
+4. There is no user login or account system.
+5. There are no email or mobile notifications.
+6. Task categories are limited to the categories provided by the application.
+7. The system does not have a cloud database.
+8. Task management actions such as Update, Complete, and Delete are currently intended for unfinished tasks on the **In Progress** page.
+9. The system does not currently include a dedicated search feature.
+10. The application focuses on basic task management rather than advanced project management.
 
-------------------------------------------------------------------------
+---
 
-# Future Improvements
+## Author
 
-Possible future improvements include:
-
--   User login and account management
--   Cloud database support
--   Task reminders and notifications
--   Search functionality
--   More customizable categories
--   Priority levels
--   Recurring tasks
--   Task statistics and reports
--   Mobile or web version
--   Multi-user task management
-
-------------------------------------------------------------------------
-
-# Author
-
-**Name:** Cyril John Dragas\
+**Name:** Cyril John Dragas  
 **Section:** CS26L - 3581
-
