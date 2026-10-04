@@ -440,16 +440,28 @@ It inherits from the PyQt6 `QMainWindow` class.
 
 ## OOP Concepts Used
 
+OrbitTask uses Object-Oriented Programming (OOP) through the use of classes, objects, encapsulation, inheritance, and polymorphism.
+
 ### Encapsulation
 
-Encapsulation is demonstrated by separating different responsibilities into different classes.
+Encapsulation is demonstrated by grouping related data and behavior inside classes.
 
-For example:
+For example, the `Task` class contains information about a task such as:
 
-- `Task` handles task data.
+- `id`
+- `title`
+- `category`
+- `created_date`
+- `due_date`
+- `is_completed`
+
+It also contains the `status` property that determines the current status of the task.
+
+The other classes have their own responsibilities:
+
 - `TaskRepository` handles database operations.
-- `TaskService` handles application logic.
-- `TaskView` handles the graphical interface.
+- `TaskService` handles application logic and validation.
+- `TaskView` handles the graphical user interface.
 
 ### Inheritance
 
@@ -461,7 +473,7 @@ For example:
 class TaskDialog(QDialog):
 ```
 
-The `TaskDialog` class inherits from `QDialog`.
+The `TaskDialog` class inherits from `QDialog`, allowing it to use the features and behavior provided by the PyQt6 dialog class.
 
 Another example is:
 
@@ -469,11 +481,15 @@ Another example is:
 class TaskView(QMainWindow):
 ```
 
-The `TaskView` class inherits from `QMainWindow`.
+The `TaskView` class inherits from `QMainWindow`, allowing it to use the features provided by the PyQt6 main window class.
 
 ### Polymorphism
 
-Polymorphism is applied through the PyQt6 framework, where the custom GUI classes inherit and use behavior from their parent Qt classes while providing their own implementation for the application.
+Polymorphism is demonstrated through the use of PyQt6's inherited classes and their methods.
+
+The custom classes `TaskDialog` and `TaskView` use the interfaces and behavior provided by their respective Qt parent classes while implementing the functionality needed by OrbitTask.
+
+This allows the application to use common Qt methods while providing application-specific behavior in the custom classes.
 
 ---
 
