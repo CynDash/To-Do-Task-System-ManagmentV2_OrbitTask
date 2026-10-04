@@ -1,3 +1,5 @@
+/* OrbitTask Theme */
+
 QMainWindow {
     background-color: #0b1220;
     color: #f5f7fb;
@@ -9,9 +11,7 @@ QWidget {
     color: #f5f7fb;
 }
 
-/* =========================
-   SIDEBAR
-   ========================= */
+/* Sidebar */
 
 #sidebar {
     background-color: #101a2d;
@@ -52,29 +52,19 @@ QWidget {
     font-weight: 600;
 }
 
-#sidebarButton:focus {
+#sidebarButton:focus,
+QPushButton:focus {
     outline: none;
     border: none;
 }
 
-QPushButton:focus {
-    outline: none;
-}
-
-/* =========================
-   SIDEBAR INFO
-   ========================= */
-
 #sidebarInfo {
     color: #667997;
     font-size: 11px;
-    line-height: 18px;
     padding: 8px;
 }
 
-/* =========================
-   HEADER
-   ========================= */
+/* Header */
 
 #pageTitle {
     color: #ffffff;
@@ -96,9 +86,7 @@ QPushButton:focus {
     min-width: 135px;
 }
 
-/* =========================
-   FILTER BAR
-   ========================= */
+/* Filters */
 
 #filterBar {
     background-color: #111d32;
@@ -125,13 +113,13 @@ QLineEdit {
 QComboBox:hover,
 QDateEdit:hover,
 QLineEdit:hover {
-    border: 1px solid #356fdc;
+    border-color: #356fdc;
 }
 
 QComboBox:focus,
 QDateEdit:focus,
 QLineEdit:focus {
-    border: 1px solid #3c78ec;
+    border-color: #3c78ec;
 }
 
 QComboBox QAbstractItemView {
@@ -142,17 +130,15 @@ QComboBox QAbstractItemView {
     selection-color: #ffffff;
 }
 
-/* =========================
-   ACTION BUTTONS
-   ========================= */
+/* Action Buttons */
 
 #addButton,
 #updateButton,
 #completeButton,
 #deleteButton {
+    color: #ffffff;
     border: none;
     border-radius: 7px;
-    color: #ffffff;
     padding: 9px 18px;
     min-width: 82px;
     font-weight: 600;
@@ -190,19 +176,13 @@ QComboBox QAbstractItemView {
     background-color: #ef4444;
 }
 
-/* =========================
-   SECTION TITLES
-   ========================= */
+/* Dashboard */
 
 #sectionTitle {
     color: #ffffff;
     font-size: 14px;
     font-weight: 600;
 }
-
-/* =========================
-   DASHBOARD CARDS
-   ========================= */
 
 #totalCard,
 #pendingCard,
@@ -227,7 +207,7 @@ QComboBox QAbstractItemView {
 
 #overdueCard {
     background-color: #35191d;
-    border: 1px solid #6b252d;
+    border-color: #6b252d;
     border-left: 3px solid #ef4444;
 }
 
@@ -237,9 +217,7 @@ QComboBox QAbstractItemView {
     border-left: 3px solid #10b981;
 }
 
-/* =========================
-   PROGRESS
-   ========================= */
+/* Progress Bar */
 
 #progressBox {
     background-color: #111d32;
@@ -262,9 +240,7 @@ QProgressBar::chunk {
     border-radius: 7px;
 }
 
-/* =========================
-   TABLES
-   ========================= */
+/* Tables */
 
 QTableWidget {
     background-color: #111d32;
@@ -287,10 +263,6 @@ QTableWidget::item:selected {
     background-color: #214f9e;
 }
 
-/* =========================
-   TABLE HEADER
-   ========================= */
-
 QHeaderView::section {
     background-color: #17263e;
     color: #91a6c5;
@@ -300,48 +272,7 @@ QHeaderView::section {
     font-weight: 600;
 }
 
-/* =========================
-   DASHBOARD TABLE SCROLLBAR
-   ========================= */
-
-QTableWidget QScrollBar:vertical {
-    background-color: #101b2d;
-    width: 8px;
-    margin: 2px;
-    border-radius: 4px;
-}
-
-QTableWidget QScrollBar::handle:vertical {
-    background-color: #354967;
-    min-height: 30px;
-    border-radius: 4px;
-}
-
-QTableWidget QScrollBar::handle:vertical:hover {
-    background-color: #496384;
-}
-
-QTableWidget QScrollBar::add-line:vertical,
-QTableWidget QScrollBar::sub-line:vertical {
-    height: 0px;
-}
-
-/* =========================
-   MAIN CONTENT SCROLL AREA
-   ========================= */
-
-QScrollArea {
-    border: none;
-    background: transparent;
-}
-
-QScrollArea > QWidget > QWidget {
-    background: transparent;
-}
-
-/* =========================
-   MAIN SCROLLBAR
-   ========================= */
+/* Scrollbars */
 
 QScrollBar:vertical {
     background-color: #101b2d;
@@ -362,12 +293,8 @@ QScrollBar::handle:vertical:hover {
 
 QScrollBar::add-line:vertical,
 QScrollBar::sub-line:vertical {
-    height: 0px;
+    height: 0;
 }
-
-/* =========================
-   HORIZONTAL SCROLLBAR
-   ========================= */
 
 QScrollBar:horizontal {
     background-color: #101b2d;
@@ -388,12 +315,32 @@ QScrollBar::handle:horizontal:hover {
 
 QScrollBar::add-line:horizontal,
 QScrollBar::sub-line:horizontal {
-    width: 0px;
+    width: 0;
 }
 
-/* =========================
-   DIALOG
-   ========================= */
+QTableWidget QScrollBar:vertical {
+    width: 8px;
+    margin: 2px;
+}
+
+QTableWidget QScrollBar::handle:vertical {
+    background-color: #354967;
+    min-height: 30px;
+    border-radius: 4px;
+}
+
+/* Main Scroll Area */
+
+QScrollArea {
+    border: none;
+    background: transparent;
+}
+
+QScrollArea > QWidget > QWidget {
+    background: transparent;
+}
+
+/* Dialog */
 
 QDialog {
     background-color: #101a2d;
@@ -403,10 +350,6 @@ QDialog {
 QDialog QLabel {
     color: #b7c4d8;
 }
-
-/* =========================
-   DIALOG BUTTONS
-   ========================= */
 
 QDialogButtonBox QPushButton {
     background-color: #2864e8;
