@@ -526,5 +526,5 @@ Possible future improvements include:
 # Author
 
 **Name:** Cyril John Dragas\
-**Section:** \CS26L - 3581\
+**Section:** CS26L - 3581
 
