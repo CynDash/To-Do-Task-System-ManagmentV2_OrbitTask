@@ -235,7 +235,7 @@ Before running OrbitTask, make sure you have:
 Clone the project from GitHub:
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_LINK
+https://github.com/CynDash/To-Do-Task-System-ManagmentV2_OrbitTask.git
 ```
 
 Then open the project folder.
