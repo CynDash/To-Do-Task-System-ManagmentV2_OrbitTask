@@ -51,6 +51,7 @@ class TaskDialog(QDialog):
             self.category.setCurrentText(task.category)
 
             d = QDate.fromString(task.due_date, "yyyy-MM-dd")
+
             if d.isValid():
                 self.due_date.setDate(d)
 
@@ -62,6 +63,7 @@ class TaskDialog(QDialog):
                 "Task description cannot be empty."
             )
             return
+
         self.accept()
 
     def data(self):
@@ -73,22 +75,40 @@ class TaskDialog(QDialog):
 
 
 class TaskView(QMainWindow):
-    CATEGORIES = ["General", "School", "House Chores", "Work", "Personal"]
-    PAGE_NAMES = ["Dashboard", "In Progress", "Completed", "All Tasks"]
+    CATEGORIES = [
+        "General",
+        "School",
+        "House Chores",
+        "Work",
+        "Personal"
+    ]
+
+    PAGE_NAMES = [
+        "Dashboard",
+        "In Progress",
+        "Completed",
+        "All Tasks"
+    ]
 
     def __init__(self, service):
         super().__init__()
         self.service = service
 
-        self.setWindowTitle("OrbitTask - To-Do Task Management System")
+        self.setWindowTitle(
+            "OrbitTask - To-Do Task Management System"
+        )
         self.setMinimumSize(900, 600)
 
         screen = self.screen().availableGeometry()
+
         self.resize(
             min(1200, screen.width() - 40),
             min(750, screen.height() - 40)
         )
-        self.move(screen.center() - self.rect().center())
+
+        self.move(
+            screen.center() - self.rect().center()
+        )
 
         self.build_ui()
         self.load_tasks()
@@ -100,6 +120,7 @@ class TaskView(QMainWindow):
         root = QHBoxLayout(main)
         root.setContentsMargins(0, 0, 0, 0)
         root.setSpacing(0)
+
         root.addWidget(self.create_sidebar())
 
         scroll = QScrollArea()
@@ -119,7 +140,9 @@ class TaskView(QMainWindow):
         self.page_title = QLabel("Dashboard")
         self.page_title.setObjectName("pageTitle")
 
-        subtitle = QLabel("Manage your tasks and stay productive.")
+        subtitle = QLabel(
+            "Manage your tasks and stay productive."
+        )
         subtitle.setObjectName("subtitle")
 
         titles.addWidget(self.page_title)
@@ -128,8 +151,11 @@ class TaskView(QMainWindow):
         header.addLayout(titles)
         header.addStretch()
 
-        today = QLabel(date.today().strftime("%A, %B %d, %Y"))
+        today = QLabel(
+            date.today().strftime("%A, %B %d, %Y")
+        )
         today.setObjectName("todayLabel")
+
         header.addWidget(today)
 
         layout.addLayout(header)
@@ -181,29 +207,43 @@ class TaskView(QMainWindow):
 
         layout.addStretch()
 
-        info = QLabel("Stay organized.\nStay productive.")
+        info = QLabel(
+            "Stay organized.\nStay productive."
+        )
         info.setObjectName("sidebarInfo")
+
         layout.addWidget(info)
 
         self.set_active_button(0)
+
         return sidebar
 
     def sidebar_button(self, text, index):
         button = QPushButton(text)
         button.setObjectName("sidebarButton")
         button.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-        button.clicked.connect(lambda: self.change_page(index))
+
+        button.clicked.connect(
+            lambda: self.change_page(index)
+        )
+
         return button
 
     def change_page(self, index):
         self.pages.setCurrentIndex(index)
         self.page_title.setText(self.PAGE_NAMES[index])
         self.set_active_button(index)
+
+        # CRUD buttons are shown only on In Progress
         self.action_bar.setVisible(index == 1)
 
     def set_active_button(self, index):
         for i, button in enumerate(self.sidebar_buttons):
-            button.setProperty("active", i == index)
+            button.setProperty(
+                "active",
+                i == index
+            )
+
             button.style().unpolish(button)
             button.style().polish(button)
 
@@ -217,12 +257,19 @@ class TaskView(QMainWindow):
         layout.addWidget(QLabel("Date"))
 
         self.date_filter = QComboBox()
+
         self.date_filter.addItems([
-            "Today", "Yesterday", "This Week",
-            "This Month", "All Dates", "Custom Date"
+            "Today",
+            "Yesterday",
+            "This Week",
+            "This Month",
+            "All Dates",
+            "Custom Date"
         ])
+
         self.date_filter.setCurrentText("All Dates")
         self.date_filter.setMinimumWidth(120)
+
         layout.addWidget(self.date_filter)
 
         self.custom_date = QDateEdit()
@@ -230,6 +277,7 @@ class TaskView(QMainWindow):
         self.custom_date.setDisplayFormat("MMM dd, yyyy")
         self.custom_date.setDate(QDate.currentDate())
         self.custom_date.hide()
+
         layout.addWidget(self.custom_date)
 
         layout.addWidget(QLabel("Category"))
@@ -238,22 +286,35 @@ class TaskView(QMainWindow):
         self.category_filter.addItem("All Categories")
         self.category_filter.addItems(self.CATEGORIES)
         self.category_filter.setMinimumWidth(120)
+
         layout.addWidget(self.category_filter)
 
         layout.addStretch()
 
-        self.date_filter.currentTextChanged.connect(self.date_filter_changed)
-        self.custom_date.dateChanged.connect(self.load_tasks)
-        self.category_filter.currentTextChanged.connect(self.load_tasks)
+        self.date_filter.currentTextChanged.connect(
+            self.date_filter_changed
+        )
+
+        self.custom_date.dateChanged.connect(
+            self.load_tasks
+        )
+
+        self.category_filter.currentTextChanged.connect(
+            self.load_tasks
+        )
 
         return widget
 
     def date_filter_changed(self, value):
-        self.custom_date.setVisible(value == "Custom Date")
+        self.custom_date.setVisible(
+            value == "Custom Date"
+        )
+
         self.load_tasks()
 
     def create_action_buttons(self):
         widget = QWidget()
+
         layout = QHBoxLayout(widget)
         layout.setContentsMargins(0, 0, 0, 0)
 
@@ -268,29 +329,47 @@ class TaskView(QMainWindow):
             button = QPushButton(text)
             button.setObjectName(name)
             button.clicked.connect(function)
+
             layout.addWidget(button)
 
         layout.addStretch()
+
         return widget
 
     def create_dashboard(self):
         page = QWidget()
+
         layout = QVBoxLayout(page)
         layout.setSpacing(12)
 
-        layout.addWidget(self.section_title("Overview"))
+        layout.addWidget(
+            self.section_title("Overview")
+        )
 
         cards = QHBoxLayout()
 
-        self.total = self.create_stat_card("TOTAL TASKS", "0", "totalCard")
+        self.total = self.create_stat_card(
+            "TOTAL TASKS",
+            "0",
+            "totalCard"
+        )
+
         self.pending_count = self.create_stat_card(
-            "IN PROGRESS", "0", "pendingCard"
+            "IN PROGRESS",
+            "0",
+            "pendingCard"
         )
+
         self.overdue_count = self.create_stat_card(
-            "OVERDUE", "0", "overdueCard"
+            "OVERDUE",
+            "0",
+            "overdueCard"
         )
+
         self.completed_count = self.create_stat_card(
-            "COMPLETED", "0", "completedCard"
+            "COMPLETED",
+            "0",
+            "completedCard"
         )
 
         for card in [
@@ -302,7 +381,10 @@ class TaskView(QMainWindow):
             cards.addWidget(card, 1)
 
         layout.addLayout(cards)
-        layout.addWidget(self.section_title("Completion Progress"))
+
+        layout.addWidget(
+            self.section_title("Completion Progress")
+        )
 
         progress_box = QWidget()
         progress_box.setObjectName("progressBox")
@@ -314,14 +396,27 @@ class TaskView(QMainWindow):
         self.progress.setFormat("%p%")
 
         progress_layout.addWidget(self.progress)
+
         layout.addWidget(progress_box)
 
-        layout.addWidget(self.section_title("Pending Tasks"))
-        self.dashboard_pending = self.create_dashboard_table()
+        layout.addWidget(
+            self.section_title("Pending Tasks")
+        )
+
+        self.dashboard_pending = (
+            self.create_dashboard_table()
+        )
+
         layout.addWidget(self.dashboard_pending)
 
-        layout.addWidget(self.section_title("Completed Tasks"))
-        self.dashboard_completed = self.create_dashboard_table()
+        layout.addWidget(
+            self.section_title("Completed Tasks")
+        )
+
+        self.dashboard_completed = (
+            self.create_dashboard_table()
+        )
+
         layout.addWidget(self.dashboard_completed)
 
         return page
@@ -332,27 +427,40 @@ class TaskView(QMainWindow):
         return label
 
     def create_stat_card(self, title, value, name):
-        card = QLabel(f"{title}\n\n{value}")
+        card = QLabel(
+            f"{title}\n\n{value}"
+        )
+
         card.setObjectName(name)
         card.setMinimumHeight(105)
+
         return card
 
     def create_dashboard_table(self):
         table = QTableWidget(0, 5)
+
         table.setHorizontalHeaderLabels([
-            "Task", "Category", "Created Date", "Due Date", "Status"
+            "Task",
+            "Category",
+            "Created Date",
+            "Due Date",
+            "Status"
         ])
 
         self.setup_table(table)
 
         header = table.horizontalHeader()
+
         for column in range(5):
             header.setSectionResizeMode(
-                column, QHeaderView.ResizeMode.Stretch
+                column,
+                QHeaderView.ResizeMode.Stretch
             )
 
         header.setFixedHeight(38)
+
         table.verticalHeader().setDefaultSectionSize(32)
+
         table.setMinimumHeight(120)
         table.setMaximumHeight(220)
 
@@ -360,17 +468,23 @@ class TaskView(QMainWindow):
 
     def create_task_page(self, name):
         page = QWidget()
+
         layout = QVBoxLayout(page)
 
-        layout.addWidget(self.section_title(name))
+        layout.addWidget(
+            self.section_title(name)
+        )
 
         table = self.create_table()
+
         layout.addWidget(table, 1)
 
         if name == "In Progress":
             self.pending = table
+
         elif name == "Completed":
             self.completed = table
+
         else:
             self.all_tasks = table
 
@@ -378,27 +492,38 @@ class TaskView(QMainWindow):
 
     def create_table(self):
         table = QTableWidget(0, 6)
+
         table.setHorizontalHeaderLabels([
-            "ID", "Task", "Category",
-            "Created Date", "Due Date", "Status"
+            "ID",
+            "Task",
+            "Category",
+            "Created Date",
+            "Due Date",
+            "Status"
         ])
 
         self.setup_table(table)
+
         table.setSelectionMode(
             QTableWidget.SelectionMode.SingleSelection
         )
 
         header = table.horizontalHeader()
+
         header.setSectionResizeMode(
-            0, QHeaderView.ResizeMode.ResizeToContents
+            0,
+            QHeaderView.ResizeMode.ResizeToContents
         )
+
         header.setSectionResizeMode(
-            1, QHeaderView.ResizeMode.Stretch
+            1,
+            QHeaderView.ResizeMode.Stretch
         )
 
         for column in range(2, 6):
             header.setSectionResizeMode(
-                column, QHeaderView.ResizeMode.ResizeToContents
+                column,
+                QHeaderView.ResizeMode.ResizeToContents
             )
 
         return table
@@ -407,53 +532,93 @@ class TaskView(QMainWindow):
         table.setSelectionBehavior(
             QTableWidget.SelectionBehavior.SelectRows
         )
+
         table.setEditTriggers(
             QTableWidget.EditTrigger.NoEditTriggers
         )
-        table.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+
+        table.setFocusPolicy(
+            Qt.FocusPolicy.NoFocus
+        )
+
         table.verticalHeader().hide()
         table.setAlternatingRowColors(True)
         table.setShowGrid(False)
+
         table.setVerticalScrollBarPolicy(
             Qt.ScrollBarPolicy.ScrollBarAsNeeded
         )
+
         table.setHorizontalScrollBarPolicy(
             Qt.ScrollBarPolicy.ScrollBarAsNeeded
         )
 
     def get_filtered_tasks(self):
         tasks = self.service.get_all_tasks()
+
         today = date.today()
         option = self.date_filter.currentText()
 
+        # Date filtering
         if option == "Today":
-            tasks = [t for t in tasks if t.created_date == today.isoformat()]
+            tasks = [
+                t for t in tasks
+                if t.created_date == today.isoformat()
+            ]
 
         elif option == "Yesterday":
             d = today - timedelta(days=1)
-            tasks = [t for t in tasks if t.created_date == d.isoformat()]
+
+            tasks = [
+                t for t in tasks
+                if t.created_date == d.isoformat()
+            ]
 
         elif option == "This Week":
-            start = today - timedelta(days=today.weekday())
+            start = today - timedelta(
+                days=today.weekday()
+            )
+
             end = start + timedelta(days=6)
-            tasks = self.filter_date_range(tasks, start, end)
+
+            tasks = self.filter_date_range(
+                tasks,
+                start,
+                end
+            )
 
         elif option == "This Month":
             tasks = [
                 t for t in tasks
                 if self.valid_date(t.created_date)
-                and self.valid_date(t.created_date).year == today.year
-                and self.valid_date(t.created_date).month == today.month
+                and self.valid_date(
+                    t.created_date
+                ).year == today.year
+                and self.valid_date(
+                    t.created_date
+                ).month == today.month
             ]
 
         elif option == "Custom Date":
-            selected = self.custom_date.date().toString("yyyy-MM-dd")
-            tasks = [t for t in tasks if t.created_date == selected]
+            selected = (
+                self.custom_date
+                .date()
+                .toString("yyyy-MM-dd")
+            )
 
+            tasks = [
+                t for t in tasks
+                if t.created_date == selected
+            ]
+
+        # Category filtering
         category = self.category_filter.currentText()
 
         if category != "All Categories":
-            tasks = [t for t in tasks if t.category == category]
+            tasks = [
+                t for t in tasks
+                if t.category == category
+            ]
 
         return tasks
 
@@ -461,6 +626,7 @@ class TaskView(QMainWindow):
     def valid_date(value):
         try:
             return date.fromisoformat(value)
+
         except ValueError:
             return None
 
@@ -468,7 +634,10 @@ class TaskView(QMainWindow):
         result = []
 
         for task in tasks:
-            created = self.valid_date(task.created_date)
+            created = self.valid_date(
+                task.created_date
+            )
+
             if created and start <= created <= end:
                 result.append(task)
 
@@ -479,6 +648,7 @@ class TaskView(QMainWindow):
 
         for task in tasks:
             row = table.rowCount()
+
             table.insertRow(row)
 
             values = [
@@ -491,7 +661,9 @@ class TaskView(QMainWindow):
             ]
 
             for column, value in enumerate(values):
-                item = QTableWidgetItem(str(value))
+                item = QTableWidgetItem(
+                    str(value)
+                )
 
                 if column == 0:
                     item.setData(
@@ -499,14 +671,24 @@ class TaskView(QMainWindow):
                         task.id
                     )
 
-                self.set_status_color(item, task.status, column == 5)
-                table.setItem(row, column, item)
+                self.set_status_color(
+                    item,
+                    task.status,
+                    column == 5
+                )
+
+                table.setItem(
+                    row,
+                    column,
+                    item
+                )
 
     def fill_dashboard_table(self, table, tasks):
         table.setRowCount(0)
 
         for task in tasks:
             row = table.rowCount()
+
             table.insertRow(row)
 
             values = [
@@ -518,14 +700,30 @@ class TaskView(QMainWindow):
             ]
 
             for column, value in enumerate(values):
-                item = QTableWidgetItem(str(value))
-                self.set_status_color(item, task.status, column == 4)
-                table.setItem(row, column, item)
+                item = QTableWidgetItem(
+                    str(value)
+                )
+
+                self.set_status_color(
+                    item,
+                    task.status,
+                    column == 4
+                )
+
+                table.setItem(
+                    row,
+                    column,
+                    item
+                )
 
             table.setRowHeight(row, 32)
 
     @staticmethod
-    def set_status_color(item, status, is_status_column):
+    def set_status_color(
+        item,
+        status,
+        is_status_column
+    ):
         if not is_status_column:
             return
 
@@ -535,45 +733,84 @@ class TaskView(QMainWindow):
         }
 
         if status in colors:
-            item.setForeground(QColor(colors[status]))
+            item.setForeground(
+                QColor(colors[status])
+            )
 
     def load_tasks(self):
+        # Get tasks using the selected date AND category filters
         tasks = self.get_filtered_tasks()
 
-        pending = [t for t in tasks if not t.is_completed]
-        completed = [t for t in tasks if t.is_completed]
+        # Separate filtered tasks
+        pending = [
+            t for t in tasks
+            if not t.is_completed
+        ]
 
-        self.fill_table(self.pending, pending)
-        self.fill_table(self.completed, completed)
-        self.fill_table(self.all_tasks, tasks)
+        completed = [
+            t for t in tasks
+            if t.is_completed
+        ]
 
-        all_tasks = self.service.get_all_tasks()
+        # Main task pages
+        self.fill_table(
+            self.pending,
+            pending
+        )
 
+        self.fill_table(
+            self.completed,
+            completed
+        )
+
+        self.fill_table(
+            self.all_tasks,
+            tasks
+        )
+
+        # Dashboard tables now use the FILTERED tasks
         self.fill_dashboard_table(
             self.dashboard_pending,
-            [t for t in all_tasks if not t.is_completed]
+            pending
         )
 
         self.fill_dashboard_table(
             self.dashboard_completed,
-            [t for t in all_tasks if t.is_completed]
+            completed
         )
 
+        # Overdue now also uses the FILTERED tasks
         overdue = [
-            t for t in all_tasks
-            if not t.is_completed and t.status == "Overdue"
+            t for t in tasks
+            if not t.is_completed
+            and t.status == "Overdue"
         ]
 
+        # Dashboard statistics
         total = len(tasks)
         done = len(completed)
 
-        self.total.setText(f"TOTAL TASKS\n\n{total}")
-        self.pending_count.setText(f"IN PROGRESS\n\n{len(pending)}")
-        self.overdue_count.setText(f"OVERDUE\n\n{len(overdue)}")
-        self.completed_count.setText(f"COMPLETED\n\n{done}")
+        self.total.setText(
+            f"TOTAL TASKS\n\n{total}"
+        )
 
+        self.pending_count.setText(
+            f"IN PROGRESS\n\n{len(pending)}"
+        )
+
+        self.overdue_count.setText(
+            f"OVERDUE\n\n{len(overdue)}"
+        )
+
+        self.completed_count.setText(
+            f"COMPLETED\n\n{done}"
+        )
+
+        # Completion percentage
         self.progress.setValue(
-            int(done / total * 100) if total else 0
+            int(done / total * 100)
+            if total
+            else 0
         )
 
     def selected_task_id(self):
@@ -585,19 +822,34 @@ class TaskView(QMainWindow):
         if row < 0:
             return None
 
-        item = self.pending.item(row, 0)
+        item = self.pending.item(
+            row,
+            0
+        )
 
-        return item.data(Qt.ItemDataRole.UserRole) if item else None
+        return (
+            item.data(
+                Qt.ItemDataRole.UserRole
+            )
+            if item
+            else None
+        )
 
     def get_task(self, task_id):
         return next(
-            (task for task in self.service.get_all_tasks()
-             if task.id == task_id),
+            (
+                task
+                for task in self.service.get_all_tasks()
+                if task.id == task_id
+            ),
             None
         )
 
     def add_task(self):
-        dialog = TaskDialog(self, categories=self.CATEGORIES)
+        dialog = TaskDialog(
+            self,
+            categories=self.CATEGORIES
+        )
 
         if dialog.exec() != QDialog.DialogCode.Accepted:
             return
@@ -625,7 +877,11 @@ class TaskView(QMainWindow):
         if not task:
             return
 
-        dialog = TaskDialog(self, task, self.CATEGORIES)
+        dialog = TaskDialog(
+            self,
+            task,
+            self.CATEGORIES
+        )
 
         if dialog.exec() != QDialog.DialogCode.Accepted:
             return
