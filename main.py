@@ -1,4 +1,5 @@
 import sys
+from pathlib import Path
 
 from PyQt6.QtWidgets import QApplication
 
@@ -13,12 +14,12 @@ def main():
 
     app = QApplication(sys.argv)
 
-    with open("Style.qss", "r", encoding="utf-8") as file:
-        app.setStyleSheet(file.read())
+    stylesheet_path = Path(__file__).resolve().with_name("Style.qss")
+    if stylesheet_path.exists():
+        app.setStyleSheet(stylesheet_path.read_text(encoding="utf-8"))
 
     repository = TaskRepository()
     service = TaskService(repository)
-
     window = TaskView(service)
     window.show()
 
@@ -26,4 +27,4 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    raise SystemExit(main())

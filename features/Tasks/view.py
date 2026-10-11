@@ -2,6 +2,8 @@ from datetime import date, timedelta
 
 from PyQt6.QtCore import QDate, Qt
 from PyQt6.QtGui import QColor
+from features.Main_Feature.task_operations import TaskOperations
+
 from PyQt6.QtWidgets import (
     QComboBox, QDateEdit, QDialog, QDialogButtonBox, QFormLayout,
     QHBoxLayout, QHeaderView, QLabel, QLineEdit, QMainWindow,
@@ -20,7 +22,14 @@ class TaskDialog(QDialog):
         self.title.setPlaceholderText("Enter task description...")
 
         self.category = QComboBox()
-        self.category.addItems(categories or [])
+        self.category.setEditable(True)
+        self.category.addItems(categories or ["General"])
+        self.category.setCurrentText("General")
+
+        self.created_date = QDateEdit()
+        self.created_date.setCalendarPopup(True)
+        self.created_date.setDisplayFormat("yyyy-MM-dd")
+        self.created_date.setDate(QDate.currentDate())
 
         self.due_date = QDateEdit()
         self.due_date.setCalendarPopup(True)
@@ -31,6 +40,7 @@ class TaskDialog(QDialog):
         form.setSpacing(14)
         form.addRow("Task:", self.title)
         form.addRow("Category:", self.category)
+        form.addRow("Created Date:", self.created_date)
         form.addRow("Due Date:", self.due_date)
 
         buttons = QDialogButtonBox(
@@ -48,12 +58,17 @@ class TaskDialog(QDialog):
 
         if task:
             self.title.setText(task.title)
+            if self.category.findText(task.category) < 0:
+                self.category.addItem(task.category)
             self.category.setCurrentText(task.category)
 
-            d = QDate.fromString(task.due_date, "yyyy-MM-dd")
+            created = QDate.fromString(task.created_date, "yyyy-MM-dd")
+            if created.isValid():
+                self.created_date.setDate(created)
 
-            if d.isValid():
-                self.due_date.setDate(d)
+            due = QDate.fromString(task.due_date, "yyyy-MM-dd")
+            if due.isValid():
+                self.due_date.setDate(due)
 
     def validate(self):
         if not self.title.text().strip():
@@ -69,8 +84,9 @@ class TaskDialog(QDialog):
     def data(self):
         return {
             "title": self.title.text().strip(),
-            "category": self.category.currentText(),
-            "due_date": self.due_date.date().toString("yyyy-MM-dd")
+            "category": self.category.currentText().strip() or "General",
+            "created_date": self.created_date.date().toString("yyyy-MM-dd"),
+            "due_date": self.due_date.date().toString("yyyy-MM-dd"),
         }
 
 
@@ -110,6 +126,7 @@ class TaskView(QMainWindow):
             screen.center() - self.rect().center()
         )
 
+        self.task_operations = TaskOperations(self, TaskDialog)
         self.build_ui()
         self.load_tasks()
 
@@ -319,10 +336,10 @@ class TaskView(QMainWindow):
         layout.setContentsMargins(0, 0, 0, 0)
 
         buttons = [
-            ("+ Add Task", "addButton", self.add_task),
-            ("Update", "updateButton", self.update_task),
-            ("Complete", "completeButton", self.complete_task),
-            ("Delete", "deleteButton", self.delete_task)
+            ("+ Add Task", "addButton", self.task_operations.add_task),
+            ("Update", "updateButton", self.task_operations.update_task),
+            ("Complete", "completeButton", self.task_operations.complete_task),
+            ("Delete", "deleteButton", self.task_operations.delete_task)
         ]
 
         for text, name, function in buttons:
@@ -409,16 +426,7 @@ class TaskView(QMainWindow):
 
         layout.addWidget(self.dashboard_pending)
 
-        layout.addWidget(
-            self.section_title("Completed Tasks")
-        )
-
-        self.dashboard_completed = (
-            self.create_dashboard_table()
-        )
-
-        layout.addWidget(self.dashboard_completed)
-
+        # Dashboard intentionally shows unfinished tasks only.
         return page
 
     def section_title(self, text):
@@ -737,8 +745,31 @@ class TaskView(QMainWindow):
                 QColor(colors[status])
             )
 
-    def load_tasks(self):
-        # Get tasks using the selected date AND category filters
+    def refresh_category_filter(self):
+        selected = self.category_filter.currentText()
+        saved_categories = self.service.get_categories()
+        categories = sorted(
+            set(self.CATEGORIES + saved_categories),
+            key=str.casefold
+        )
+
+        self.category_filter.blockSignals(True)
+        self.category_filter.clear()
+        self.category_filter.addItem("All Categories")
+        self.category_filter.addItems(categories)
+        self.category_filter.setCurrentText(
+            selected if selected in ["All Categories"] + categories
+            else "All Categories"
+        )
+        self.category_filter.blockSignals(False)
+
+    def load_tasks(self, *_):
+        if not hasattr(self, "category_filter"):
+            return
+
+        self.refresh_category_filter()
+
+        # Apply the selected date and category filters consistently.
         tasks = self.get_filtered_tasks()
 
         # Separate filtered tasks
@@ -768,15 +799,10 @@ class TaskView(QMainWindow):
             tasks
         )
 
-        # Dashboard tables now use the FILTERED tasks
+        # Dashboard displays unfinished tasks only.
         self.fill_dashboard_table(
             self.dashboard_pending,
             pending
-        )
-
-        self.fill_dashboard_table(
-            self.dashboard_completed,
-            completed
         )
 
         # Overdue now also uses the FILTERED tasks
@@ -844,95 +870,6 @@ class TaskView(QMainWindow):
             ),
             None
         )
-
-    def add_task(self):
-        dialog = TaskDialog(
-            self,
-            categories=self.CATEGORIES
-        )
-
-        if dialog.exec() != QDialog.DialogCode.Accepted:
-            return
-
-        data = dialog.data()
-
-        self.service.add_task(
-            data["title"],
-            data["category"],
-            date.today().isoformat(),
-            data["due_date"]
-        )
-
-        self.load_tasks()
-
-    def update_task(self):
-        task_id = self.selected_task_id()
-
-        if task_id is None:
-            self.show_select_message()
-            return
-
-        task = self.get_task(task_id)
-
-        if not task:
-            return
-
-        dialog = TaskDialog(
-            self,
-            task,
-            self.CATEGORIES
-        )
-
-        if dialog.exec() != QDialog.DialogCode.Accepted:
-            return
-
-        data = dialog.data()
-
-        self.service.update_task(
-            task_id,
-            data["title"],
-            data["category"],
-            data["due_date"]
-        )
-
-        self.load_tasks()
-
-    def complete_task(self):
-        task_id = self.selected_task_id()
-
-        if task_id is None:
-            self.show_select_message()
-            return
-
-        task = self.get_task(task_id)
-
-        if task and not task.is_completed:
-            self.service.complete_task(task_id)
-            self.load_tasks()
-
-    def delete_task(self):
-        task_id = self.selected_task_id()
-
-        if task_id is None:
-            self.show_select_message()
-            return
-
-        task = self.get_task(task_id)
-
-        if not task:
-            return
-
-        answer = QMessageBox.question(
-            self,
-            "Delete Task",
-            f"Delete '{task.title}'?",
-            QMessageBox.StandardButton.Yes |
-            QMessageBox.StandardButton.No
-        )
-
-        if answer == QMessageBox.StandardButton.Yes:
-            self.service.delete_task(task_id)
-            self.load_tasks()
 
     def show_select_message(self):
         QMessageBox.information(
