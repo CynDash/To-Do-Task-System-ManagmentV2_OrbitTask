@@ -220,11 +220,12 @@ The system was tested by performing the main task management operations.
 ## Author
 
 **Name:** Cyril John Dragas  
-**Section:** [Enter your section]
+**Section:** CS26 (3581)
 
 ## Version
 
-**OrbitTask v1.0.0**
+**To-Do-Task-System-ManagmentV2_OrbitTask
+**
 
 The current version includes:
 
