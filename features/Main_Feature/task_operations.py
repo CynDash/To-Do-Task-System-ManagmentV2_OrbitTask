@@ -1,8 +1,4 @@
-"""Centralized task management operations for OrbitTask.
 
-Add, update, complete, and delete behavior is kept in this module
-rather than implemented inside the GUI view.
-"""
 
 from PyQt6.QtWidgets import QDialog, QMessageBox
 
