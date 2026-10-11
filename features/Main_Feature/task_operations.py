@@ -4,8 +4,6 @@ from PyQt6.QtWidgets import QDialog, QMessageBox
 
 
 class TaskOperations:
-    """Handles task actions initiated by the TaskView interface."""
-
     def __init__(self, view, dialog_class):
         self.view = view
         self.service = view.service
