@@ -102,9 +102,9 @@ OrbitTask/
 - PyQt6
 
 ### 1. Download or Clone the Project
-
+```bash
 https://github.com/CynDash/To-Do-Task-System-ManagmentV2_OrbitTask.git
-
+```
 ### 2. Install Dependencies
 
 ```bash
