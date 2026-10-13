@@ -103,7 +103,7 @@ OrbitTask/
 
 ### 1. Download or Clone the Project
 
-Download the repository and open the project folder in a terminal or in PyCharm.
+https://github.com/CynDash/To-Do-Task-System-ManagmentV2_OrbitTask.git
 
 ### 2. Install Dependencies
 
